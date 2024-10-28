@@ -19,6 +19,18 @@ function SetPumpPrompt()
 	PromptSetHoldMode(PumpPrompt, 1000)
 	PromptSetGroup(PumpPrompt, PumpPrompts)
 	PromptRegisterEnd(PumpPrompt)
+
+    -- Adaugă un prompt pentru butelcă
+    local strButelca = Config.Texts['PromptButelca']
+    PumpPromptButelca = PromptRegisterBegin()
+    PromptSetControlAction(PumpPromptButelca, Config.KeyPumpButelca)
+    strButelca = CreateVarString(10, 'LITERAL_STRING', strButelca)
+    PromptSetText(PumpPromptButelca, strButelca)
+    PromptSetEnabled(PumpPromptButelca, 1)
+    PromptSetVisible(PumpPromptButelca, 1)
+    PromptSetHoldMode(PumpPromptButelca, 1000)
+    PromptSetGroup(PumpPromptButelca, PumpPrompts)
+    PromptRegisterEnd(PumpPromptButelca)
 end
 
 Citizen.CreateThread(function() 
@@ -64,6 +76,14 @@ Citizen.CreateThread(function()
                                 end
                             end)
                         end
+
+                        -- Logica pentru butelcă
+                        local labelButelca = CreateVarString(10, 'LITERAL_STRING', Config.Texts['ObjectButelca'])
+                        PromptSetActiveGroupThisFrame(PumpPrompts, labelButelca)
+                        if PromptHasHoldModeCompleted(PumpPromptButelca) then
+                            Citizen.Wait(500)
+                            TriggerServerEvent('xakra_waterpump:CheckButelca', scenario)
+                        end
                     end
 
                 end
@@ -89,7 +109,8 @@ AddEventHandler('xakra_waterpump:Pumping', function(num, scenario)
     end
     
 	local progressbar = exports.vorp_progressbar:initiate()
-	progressbar.start(Config.Texts['Pumping'], 15000, function ()
+	local timeToPump = Config.TimePumpWater * num  -- Timpul se dublează în funcție de cantitate
+	progressbar.start(Config.Texts['Pumping'], timeToPump, function ()
 
 		ClearPedTasks(PlayerPedId(), true)
 
@@ -104,6 +125,37 @@ AddEventHandler('xakra_waterpump:Pumping', function(num, scenario)
         active = false
 
 	end, 'innercircle', Config.ProgressbarColor)
+end)
+
+RegisterNetEvent('xakra_waterpump:PumpingButelca')
+AddEventHandler('xakra_waterpump:PumpingButelca', function(scenario)
+    active = true
+
+    TaskUseScenarioPoint(PlayerPedId(), scenario, '' , -1.0, true, false, 0, false, -1.0, true)
+
+    local bottle
+    local waterpump = GetNearbyWaterPump()
+
+    if waterpump then
+        local bottle_coords = GetOffsetFromEntityInWorldCoords(waterpump, 0, -0.30, 0.0)
+        bottle = CreateObject(GetHashKey('s_rc_poisonedwater01x'), bottle_coords, true, true, true)
+    end
+    
+    local progressbar = exports.vorp_progressbar:initiate()
+    progressbar.start(Config.Texts['Pumping'], Config.TimePumpWater, function ()
+        ClearPedTasks(PlayerPedId(), true)
+
+        TriggerServerEvent('xakra_waterpump:AddButelca')
+
+        Wait(1000)
+
+        if DoesEntityExist(bottle) then
+            DeleteEntity(bottle)
+        end
+
+        active = false
+
+    end, 'innercircle', Config.ProgressbarColor)
 end)
 
 function GetNearbyWaterPump()
@@ -346,13 +398,19 @@ for label,datatype in pairs(DataView.Types) do
         return v
     end
 end
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
------------------ 									                                            ------------
------------------		END OF DATAVIEW FUNCTIONS				                               	------------
------------------ 										                                        ------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
+-- Credita Xakra și modificări aduse de Mr.Crocodile
+print("Credits to Xakra and modifications by Mr.Crocodile")
+-- ... existing code ...
+
+
+
+
+
+
+
+
+
+
+
+
 
