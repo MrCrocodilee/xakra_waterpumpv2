@@ -27,3 +27,12 @@ In the Config file you can configure:
 -   Add 'ensure xakra_waterpump' in the 'Resources.cfg' document
 
 Video: https://youtu.be/Ys8IwgCLM7I
+
+
+Modifications
+
+Implemented custom notifications in functions if you have a TriggerEvent that can send notifications to your HUD.
+
+Modified so that when filling a bottle with water, it takes 10 seconds per bottle. If you choose to fill 100 empty bottles, the time will be 10 seconds x 100 bottles.
+
+Added a button to allow filling the empty canteen.

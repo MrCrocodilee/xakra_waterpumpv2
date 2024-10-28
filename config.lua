@@ -4,36 +4,46 @@ Config.KeyPump = 0xA1ABB953 -- G
 
 Config.ProgressbarColor = '#0A4F05' -- VORP progress bar color
 
-Config.TimePumpWater = 20000    -- Time to pump water
+Config.TimePumpWater = 10000    -- Time to pump water
 
-Config.EmptyBottle = 'empty_bottle' -- Name of the empty bottle (to pump water/item that returns you when drinking water)
-Config.Water = 'water'  -- Name of the water items
+Config.EmptyBottle = 'emptybottle' -- Name of the empty bottle
+Config.Water = 'waterbottle'  -- Name of the water bottle
 
-Config.DrinkingWater = true -- Enable or disable drink water (VORP METABOLISM)
+Config.EmptyButelca = 'butelcagoala' -- Name of the empty flask. Do not change the name of this item.
+Config.FullButelca = 'butelcaplina'  -- Name of the full flask. Do not change the name of this item.
+
+Config.DrinkingWater = false -- Enable or disable drinking water (VORP METABOLISM)
 Config.Thirst = 200 -- Amount of thirst that will make you drink the water
 Config.ProbabilityBottle = 25   -- X/100 Probability of returning an empty bottle when consuming water
 
-Config.NotifyMetabolism = true  -- Enable or disable notifications and effects when thirsty or hungry (VORP METABOLISM)
+Config.NotifyMetabolism = false  -- Enable or disable notifications and effects when thirsty or hungry (VORP METABOLISM)
+
+Config.KeyPumpButelca = 0xD8F73058 -- H (or another key of choice)
 
 Config.Texts = {
     -- WATER PUMP
-    ['Prompt'] = 'Bombear',
-    ['ObjectPump'] = 'Bomba de agua',
-    ['Pumping'] = 'Bombeando...',
-    ['AddWater'] =  'Has bombeado: ~t6~', 
-    ['NotEmptyBootle'] =  'Necesitas más botellas vacías',
-    ['Water'] =  'Agua', 
-    ['FullInventory'] =  'No puedes llevar más agua', 
+    ['Prompt'] = 'Fill Bottle',
+    ['ObjectPump'] = 'Water Pump',
+    ['Pumping'] = 'Filling...',
+    ['AddWater'] =  'You filled ~t6~', 
+    ['NotEmptyBootle'] =  'You need more empty bottles',
+    ['Water'] =  'Water', 
+    ['FullInventory'] =  'You cannot carry more bottles...', 
+
+    -- FLASK
+    ['PromptButelca'] = 'Fill Flask',
+    ['ObjectButelca'] = 'Water Flask',
+    ['AddButelca'] = 'You filled the flask',
+    ['NotEmptyButelca'] = 'You need an empty flask',
 
     -- INPUT
-    ['Quantity'] = 'Cantidad',
-    ['OnlyNumber'] = 'Solo números',
-    ['Button'] =  'Aceptar',
-    ['PlaceHolder'] =  'Cantidad de agua',
-    ['DestroyWater'] = 'Ya no se puede usar mas esta botella',
+    ['Quantity'] = 'Quantity',
+    ['OnlyNumber'] = 'Only numbers',
+    ['Button'] =  'Accept',
+    ['PlaceHolder'] =  'Quantity in bottles',
+    ['DestroyWater'] = 'This bottle can no longer be used',
 
-    -- VORP METABOLSIM NOTIFY
-    ['Hunger'] = 'Tienes mucha hambre',
-    ['Thirst'] = 'Te estás deshidratando',
+    -- VORP METABOLISM NOTIFY
+    ['Hunger'] = 'You are very hungry',
+    ['Thirst'] = 'You are dehydrating',
 }
-
